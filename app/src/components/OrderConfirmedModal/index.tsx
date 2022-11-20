@@ -15,7 +15,7 @@ export function OrderConfirmedModal({
 }: OrderConfirmedModalProps) {
   return (
     <Modal visible={visible} animationType="fade">
-      <StatusBar style="light" />
+      <StatusBar style="light" backgroundColor="#d73035" />
 
       <Container>
         <CheckCircle />

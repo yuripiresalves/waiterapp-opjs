@@ -124,6 +124,11 @@ export const Actions = styled.footer`
   flex-direction: column;
   margin-top: 32px;
 
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   .primary {
     background: #333;
     border-radius: 48px;
@@ -149,11 +154,30 @@ export const Actions = styled.footer`
     background: transparent;
     font-weight: bold;
     margin-top: 12px;
-    transition: background 0.3s, color 0.3s;
+    width: fit-content;
+    margin: 12px auto 0;
+
+    &::after {
+      content: '';
+      width: 0%;
+      height: 2px;
+      background-color: #d73035;
+      display: block;
+    }
 
     &:hover {
-      background: #fb474d;
-      color: #fff;
+      &::after {
+        animation: underlineHover 0.5s forwards;
+      }
+    }
+
+    @keyframes underlineHover {
+      from {
+        width: 0%;
+      }
+      to {
+        width: 100%;
+      }
     }
   }
 `;

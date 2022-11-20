@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export const Board = styled.div`
+interface Props {
+  hasOrders: boolean;
+}
+
+export const Board = styled.div<Props>`
   padding: 16px;
   border: 1px solid rgba(204, 204, 204, 0.4);
   border-radius: 16px;
@@ -8,7 +12,8 @@ export const Board = styled.div`
   flex-direction: column;
   align-items: center;
   flex: 1;
-  height: fit-content;
+  height: ${(props) => (props.hasOrders ? '100%' : 'fit-content')};
+  overflow-y: scroll;
 
   > header {
     padding: 8px;

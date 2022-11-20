@@ -10,9 +10,19 @@ interface OrderModalProps {
   visible: boolean;
   order: Order | null;
   onClose: () => void;
+  onCancelOrder: () => Promise<void>;
+  isLoading: boolean;
+  onChangeOrderStatus: () => void;
 }
 
-export function OrderModal({ visible, order, onClose }: OrderModalProps) {
+export function OrderModal({
+  visible,
+  order,
+  onClose,
+  onCancelOrder,
+  isLoading,
+  onChangeOrderStatus,
+}: OrderModalProps) {
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
@@ -68,7 +78,7 @@ export function OrderModal({ visible, order, onClose }: OrderModalProps) {
             {order.products.map(({ _id, product, quantity }) => (
               <li className="item" key={_id}>
                 <img
-                  src={`http://localhost:3333/uploads/${product.imagePath}`}
+                  src={`http://192.168.0.106:3333/uploads/${product.imagePath}`}
                   alt={product.name}
                   width="48"
                   height="40"
@@ -89,12 +99,30 @@ export function OrderModal({ visible, order, onClose }: OrderModalProps) {
         </OrderDetails>
 
         <Actions>
-          <button type="button" className="primary">
-            <span>👨‍🍳</span>
-            <strong>Iniciar Produção</strong>
-          </button>
+          {order.status !== 'DONE' && (
+            <button
+              type="button"
+              className="primary"
+              disabled={isLoading}
+              onClick={onChangeOrderStatus}
+            >
+              <span>
+                {order.status === 'WAITING' && '👨‍🍳'}
+                {order.status === 'IN_PRODUCTION' && '✅'}
+              </span>
+              <strong>
+                {order.status === 'WAITING' && 'Iniciar Preparação'}
+                {order.status === 'IN_PRODUCTION' && 'Concluir Pedido'}
+              </strong>
+            </button>
+          )}
 
-          <button type="button" className="secondary">
+          <button
+            type="button"
+            className="secondary"
+            onClick={onCancelOrder}
+            disabled={isLoading}
+          >
             <strong>Cancelar Pedido</strong>
           </button>
         </Actions>

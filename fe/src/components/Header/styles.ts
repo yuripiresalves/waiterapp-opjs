@@ -6,6 +6,10 @@ export const Container = styled.header`
   justify-content: center;
   align-items: center;
   height: 198px;
+
+  @media (max-width: 570px) {
+    height: 120px;
+  }
 `;
 
 export const Content = styled.div`
